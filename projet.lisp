@@ -12,7 +12,7 @@
     nom
     matieres
     )
-    (cons Francais (make-matiere :nom "Francais"
+    (setq Francais (make-matiere :nom "Francais"
                                  :moyenne 10   ) )
     (setq Philosophie (make-matiere :nom "Philosophie"
                                  :moyenne 12   ) )
@@ -36,6 +36,7 @@
     (setq notes  '(Francais Philosophie Anglais Economie Histoire Mathematiques Physique SVT))
     ( setq eleve1 (make-eleve :nom "nathanael"
      :matieres notes )
-) 
+)
+(print Litteraire) 
 (print eleve1)
-
+ (setq notes  '(Francais Philosophie Anglais Economie Histoire Mathematiques Physique SVT))
