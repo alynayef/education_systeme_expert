@@ -1,0 +1,7 @@
+-  Si moyenne(français, philosophie, anglais) ≥ 10 Alors propose Littéraire.
+-  Si moyenne(histoire, économie, mathématiques) ≥ 10 Alors propose
+   Économique et sociale.
+-  Si moyenne(mathématiques, physique, SVT) ≥ 10 Alors propose
+   Scientifique. 
+	-  Pour filières proposées : Pondération de chaque filière
+	   = Note filiere / somme des notes des filières proposées
