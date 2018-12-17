@@ -1,4 +1,4 @@
-(require 'regles.lisp)
+; structure du programme
 (defstruct matiere
     nom
     moyenne
@@ -14,6 +14,15 @@
     nom
     resultats
     )
+
+    ;--------------------------
+    ;Methode utilisées
+    ;--------------------------
+    (defun moyenneGeneral (note1 note2 note3) (/ (+  note1 note2 note3) 3))
+
+    ;--------------------------
+    ;saisie des notes pour chaque matiere et instantiation des matieres
+    ;--------------------------
     (write "saisir la moyenne en Français: ")
     (setq Francais (make-matiere :nom 'Francais
                                  :moyenne (read)  ) )
@@ -37,23 +46,27 @@
                                  :moyenne (read)   ) )
     (write "saisir la moyenne en SVT: ")
     (setq SVT (make-matiere :nom 'SVT
-                                 :moyenne (read)   ) ) 
-    (defun moyenneGeneral (note1 note2 note3) (/ (+  note1 note2 note3) 3))
-
-
-    (setq  moyenneLitteraire (moyenneGeneral ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais)))
-    (setq Litteraire (make-filiere :nomfiliere 'Litteraire :matiere (list Francais Philosophie Anglais) :moyennefiliere moyenneLitteraire))
+                                 :moyenne (read)   ) )
+    ;--------------------------
+    ;intanttiation des filiéres
+    ;--------------------------
+    (setq Litteraire (make-filiere :nomfiliere 'Litteraire :matiere (list Francais Philosophie Anglais) :moyennefiliere -1))
 
     (setq Economie (make-filiere :nomfiliere 'Economie :matiere (list Economie Histoire Mathematiques) :moyennefiliere -1))
 
-    (setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1))
-
-    ( setq eleve1 (make-eleve :nom 'nathanael
+    (setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1)) 
+    ;--------------------------
+    ;instantion d'un éléve
+    ;--------------------------
+    (write "saisir le nom complet de l'eleve: ")
+     ( setq eleve1 (make-eleve :nom (read)
      :resultats (list Litteraire Economie Scientifique )))
 (write "--------------------PROJET--------------------")
 (print ( filiere-moyennefiliere Litteraire))
 (print eleve1)
-(print moyenneLitteraire)
+(write "-----------------MODIFICATION-----------------")
+(setf  ( filiere-moyennefiliere Litteraire) (moyenneGeneral ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
+(print eleve1)
 (write "--------------------PROJET--------------------")
 
 
