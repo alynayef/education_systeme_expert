@@ -1,4 +1,4 @@
-(load “regles.lisp”)
+(require 'regles.lisp)
 (defstruct matiere
     nom
     moyenne
