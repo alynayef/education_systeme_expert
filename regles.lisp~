@@ -1,0 +1,6 @@
+;REGLES
+;---------------------------------
+
+(defun calcule-moyennes (eleve)
+       (cond ((null eleve.note) 
+       
