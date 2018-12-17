@@ -1,19 +1,34 @@
 ;REGLES
 ;---------------------------------
+(defstruct regle
+    nom
+    condition
+    action
+)
 
-(defun calcule-moyennes (eleve)
-      ((setq eleve.noteL (/ (+ eleve.Philosophie.moyenne eleve.Fran�ais.moyenne eleve.Anglais.moyenne) 3))
-       (setq eleve.noteES (/ (+ eleve.Mathematiques.moyenne eleve.Economie.moyenne eleve.Histoire.moyenne) 3))
-       (setq eleve.noteS (/ (+ eleve.Mathematiques.moyenne eleve.Physique.moyenne eleve.SVT.moyenne) 3))))
+(setq regle1 (make-regle :nom 'regle1
+                         :condition '(or (equal (filiere-moyennefiliere Litteraire) nil) (equal (filiere-moyennefiliere Economie) nil) (equal (filiere-moyennefiliere Scientifique) nil))
+                         :action '(calcul-moyennes)))
 
-(defun R1 (eleve)
-       (calcule-moyennes (eleve))
+(setq regle2 (make-regle :nom 'regle2
+                         :condition '(and (< (filiere-moyennefiliere Litteraire) 10) (< (filiere-moyennefiliere Economie) 10) (< filiere-moyennefiliere Scientifique) 10)
+                         :action '(printf "Un redoublement serait bien!")))
 
-(defun R2-R3 (eleve)
-       (cond ((and (< eleve.noteL 10) (< eleve.noteS 10) (< eleve.noteES 10)) (print "Un redoublement serait bien"))
-             (t (cond ((> noteL 9.99) (format t "Filiere litteraire conseillee a ~d" (/ noteL (calcul-ponderation-total noteL noteES noteS))))
-                      ((> noteES 9.99) (format t "Filiere economie et Social conseillee a  ~d" (/ noteES (calcul-ponderation-total noteL noteES noteS))))
-                      ((> noteS 9.99) (format t "Filiere scientifique conseillee a ~d" (/ noteS (calcul-ponderation-total noteL noteES noteS))))))))
+(setq regle3 (make-regle :nom 'regle3
+                         :condition '(or (> (filiere-moyennefiliere Litteraire) 9.99) (> (filiere-moyennefiliere Economie) 9.99) (> (filiere-moyennefiliere Scientifique) 9.99))
+                         :action '(cond ((> noteL 9.99) (format t "Fili�re litt�raire conseill�e � ~d" (/ noteL (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteES 9.99) (format t "Fili�re economie et Social conseill�e � ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteS 9.99) (format t "Fili�re scientifique conseill�e � ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
+
+
+;METHODES UTILISEES
+;---------------------------------
+
+(defun calcule-moyennes ()
+      ((setf (filiere-moyennefiliere Litteraire) moyenneLitteraire)
+       (setf (filiere-moyennefiliere Scientifique) moyenneScientifique)
+       (setf (filiere-moyennefiliere Economie) moyenneEconomie)))
+
 
 (defun calcul-ponderation-note (note)
        (cond ((> note 9.99) note)
