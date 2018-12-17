@@ -21,6 +21,7 @@
                                         ((> noteES 9.99) (format t "Fili�re economie et Social conseill�e � ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
                                         ((> noteS 9.99) (format t "Fili�re scientifique conseill�e � ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
 
+(setq listeregle (list regle1 regle2 regle3))
 ;METHODES UTILISEES
 ;---------------------------------
 
