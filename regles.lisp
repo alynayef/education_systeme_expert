@@ -1,5 +1,6 @@
 ;REGLES
 ;---------------------------------
+
 (defstruct regle
     nom
     condition
@@ -20,15 +21,13 @@
                                         ((> noteES 9.99) (format t "Fili�re economie et Social conseill�e � ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
                                         ((> noteS 9.99) (format t "Fili�re scientifique conseill�e � ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
 
-
 ;METHODES UTILISEES
 ;---------------------------------
 
 (defun calcule-moyennes ()
-      ((setf (filiere-moyennefiliere Litteraire) moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
-       (setf (filiere-moyennefiliere Scientifique) moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
-       (setf (filiere-moyennefiliere Economie) moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire)))))
-
+      ((setf (filiere-moyennefiliere Litteraire) (moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais)))
+       (setf (filiere-moyennefiliere Scientifique) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT)))
+       (setf (filiere-moyennefiliere Economie) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire))))))
 
 (defun calcul-ponderation-note (note)
        (cond ((> note 9.99) note)
