@@ -1,6 +1,5 @@
 ;REGLES
 ;---------------------------------
-
 (defstruct regle
     nom
     condition
@@ -17,9 +16,9 @@
 
 (setq regle3 (make-regle :nom 'regle3
                          :condition '(or (> (filiere-moyennefiliere Litteraire) 9.99) (> (filiere-moyennefiliere Economie) 9.99) (> (filiere-moyennefiliere Scientifique) 9.99))
-                         :action '(cond ((> noteL 9.99) (format t "Filière littéraire conseillée à ~d" (/ noteL (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique)))))
-                                        ((> noteES 9.99) (format t "Filière economie et Social conseillée à ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
-                                        ((> noteS 9.99) (format t "Filière scientifique conseillée à ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
+                         :action '(cond ((> noteL 9.99) (format t "Filiï¿½re littï¿½raire conseillï¿½e ï¿½ ~d" (/ noteL (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteES 9.99) (format t "Filiï¿½re economie et Social conseillï¿½e ï¿½ ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteS 9.99) (format t "Filiï¿½re scientifique conseillï¿½e ï¿½ ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
 
 
 ;METHODES UTILISEES
@@ -29,6 +28,7 @@
       ((setf (filiere-moyennefiliere Litteraire) moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
        (setf (filiere-moyennefiliere Scientifique) moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
        (setf (filiere-moyennefiliere Economie) moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire)))))
+
 
 (defun calcul-ponderation-note (note)
        (cond ((> note 9.99) note)
