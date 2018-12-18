@@ -25,28 +25,28 @@
 ;--------------------------
 (write "saisir la moyenne en Français: ")
 (setq Francais (make-matiere :nom 'Francais
-                                 :moyenne (read)  ) )
+                                 :moyenne 12.0  ) )
 (write "saisir la moyenne en Philosophie: ")
 (setq Philosophie (make-matiere :nom 'Philosophie
-                                :moyenne (read)   ) )
+                                :moyenne 15.0   ) )
 (write "saisir la moyenne en Anglais: ")
 (setq Anglais (make-matiere :nom 'Anglais
-                            :moyenne (read)  ) )
+                            :moyenne 10.0  ) )
 (write "saisir la moyenne en Economie: ")
 (setq Economie (make-matiere :nom 'Economie
-                                :moyenne (read)   ) )
+                                :moyenne 8.0   ) )
 (write "saisir la moyenne en Histoire: ")
 (setq Histoire (make-matiere :nom 'Histoire
-                                :moyenne (read)   ) )
+                                :moyenne 7.0   ) )
 (write "saisir la moyenne en Mathematiques: ")
 (setq Mathematiques (make-matiere :nom 'Mathematiques
-                                :moyenne (read)   ) )
+                                :moyenne 9.0   ) )
 (write "saisir la moyenne en Physique: ")
 (setq Physique (make-matiere :nom 'Physique
-                                :moyenne (read)   ) )
+                                :moyenne 18.0   ) )
 (write "saisir la moyenne en SVT: ")
 (setq SVT (make-matiere :nom 'SVT
-                                :moyenne (read)   ) )
+                                :moyenne 14.0   ) )
 ;--------------------------
 ;intanttiation des filiéres
 ;--------------------------
@@ -63,7 +63,7 @@
     :resultats (list Litteraire FEconomie Scientifique )))
 ;--------------------------
 ;REGLES
-;--------------------------
+;---------------------------------
 
 (defstruct regle
     nom
@@ -74,30 +74,30 @@
 
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
-                         :condition '(or (equal ( filiere-moyennefiliere Litteraire) -1) (equal ( filiere-moyennefiliere Economie) -1.0) (equal ( filiere-moyennefiliere Scientifique) -1.0))
-                         :action '((setf ( filiere-moyennefiliere Litteraire) (moyenneGenerale ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ( matiere-moyenne Francais)))
-                                   (setf ( filiere-moyennefiliere Scientifique) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT)))
-                                   (setf ( filiere-moyennefiliere Economie) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Economie) ( matiere-moyenne Histoire))))))
+                         :condition '(or (equal (filiere-moyennefiliere Litteraire) -1.0) (equal (filiere-moyennefiliere FEconomie) -1.0) (equal (filiere-moyennefiliere Scientifique) -1.0))
+                         :action '(setf (filiere-moyennefiliere Litteraire) (moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
+                                         (filiere-moyennefiliere Scientifique) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
+                                         (filiere-moyennefiliere FEconomie) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire)))))
 
 (setq regle2 (make-regle :nom 'regle2
                          :utilisee 'nil
-                         :condition '(and (< ( filiere-moyennefiliere Litteraire) 10) (< ( filiere-moyennefiliere Economie) 10) (< ( filiere-moyennefiliere Scientifique) 10)
+                         :condition '(and (< (filiere-moyennefiliere Litteraire) 10) (< (filiere-moyennefiliere Economie) 10) (< (filiere-moyennefiliere Scientifique) 10)
                          :action '(printf "Un redoublement serait bien!"))))
 
 (setq regle3 (make-regle :nom 'regle3
                          :utilisee 'nil
-                         :condition '(or (> ( filiere-moyennefiliere Litteraire) 9.99) (> ( filiere-moyennefiliere Economie) 9.99) (> ( filiere-moyennefiliere Scientifique) 9.99))
-                         :action '(cond ((> noteL 9.99) (format t "Filiere litteraire conseillee ~d" (/ noteL (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere Economie)( filiere-moyennefiliere Scientifique)))))
-                                        ((> noteES 9.99) (format t "Filiere economie et Social conseillee ~d" (/ noteES (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere Economie)  ( filiere-moyennefiliere Scientifique)))))
-                                        ((> noteS 9.99) (format t "Filiere scientifique conseillee ~d" (/ noteS (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere Economie) ( filiere-moyennefiliere Scientifique))))))))
+                         :condition '(or (> (filiere-moyennefiliere Litteraire) 9.99) (> (filiere-moyennefiliere Economie) 9.99) (> (filiere-moyennefiliere Scientifique) 9.99))
+                         :action '(cond ((> noteL 9.99) (format t "Filiere litteraire conseillee ~d" (/ noteL (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteES 9.99) (format t "Filiere economie et Social conseillee ~d" (/ noteES (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie)  (filiere-moyennefiliere Scientifique)))))
+                                        ((> noteS 9.99) (format t "Filiere scientifique conseillee ~d" (/ noteS (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere Economie) (filiere-moyennefiliere Scientifique))))))))
 
 (setq listeregle (list regle1 regle2 regle3))
-;--------------------------
-;METHODES UTILISEES
-;--------------------------
 
-(defun calcul-ponderation-note (notefiliere)
-       (cond ((> notefiliere 9.99) notefiliere)
+;METHODES UTILISEES
+;---------------------------------
+
+(defun calcul-ponderation-note (moyenne-filiere)
+       (cond ((> moyenne-filiere 9.99) moyenne-filiere)
              (t 0)))
 
 (defun calcul-ponderation-total (noteL noteES noteS)
