@@ -52,7 +52,7 @@
     ;--------------------------
     (setq Litteraire (make-filiere :nomfiliere 'Litteraire :matiere (list Francais Philosophie Anglais) :moyennefiliere -1))
 
-    (setq Economie (make-filiere :nomfiliere 'Economie :matiere (list Economie Histoire Mathematiques) :moyennefiliere -1))
+    (setq FEconomie (make-filiere :nomfiliere 'Economie :matiere (list Economie Histoire Mathematiques) :moyennefiliere -1))
 
     (setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1)) 
     ;--------------------------
@@ -60,12 +60,14 @@
     ;--------------------------
     (write "saisir le nom complet de l'eleve: ")
      ( setq eleve1 (make-eleve :nom (read)
-     :resultats (list Litteraire Economie Scientifique )))
+     :resultats (list Litteraire FEconomie Scientifique )))
 (write "--------------------PROJET--------------------")
 (print ( filiere-moyennefiliere Litteraire))
 (print eleve1)
 (write "-----------------MODIFICATION-----------------")
 (setf  ( filiere-moyennefiliere Litteraire) (moyenneGeneral ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
+(setf  ( filiere-moyennefiliere FEconomie) (moyenneGeneral ( matiere-moyenne Economie) ( matiere-moyenne Histoire) ( matiere-moyenne Mathematiques) ) )
+(setf  ( filiere-moyennefiliere Scientifique) (moyenneGeneral ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT) ) )
 (print eleve1)
 (write "--------------------PROJET--------------------")
 

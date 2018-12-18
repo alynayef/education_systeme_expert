@@ -1,6 +1,6 @@
 ;REGLES
 ;---------------------------------
-(load ())
+
 (defstruct regle
     nom
     utilisee
