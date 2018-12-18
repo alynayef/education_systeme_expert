@@ -10,10 +10,10 @@
 
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
-                         :condition '(or (equal (filiere-moyennefiliere Litteraire) nil) (equal (filiere-moyennefiliere Economie) nil) (equal (filiere-moyennefiliere Scientifique) nil))
-                         :action '((setf (filiere-moyennefiliere Litteraire) (moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais)))
-                                   (setf (filiere-moyennefiliere Scientifique) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT)))
-                                   (setf (filiere-moyennefiliere Economie) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire))))))
+                         :condition '(or (equal (filiere-moyennefiliere Litteraire) -1) (equal (filiere-moyennefiliere Economie) -1) (equal (filiere-moyennefiliere Scientifique) -1))
+                         :action '(setf (filiere-moyennefiliere Litteraire) (moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
+                                         (filiere-moyennefiliere Scientifique) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
+                                         (filiere-moyennefiliere Economie) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire)))))
 
 (setq regle2 (make-regle :nom 'regle2
                          :utilisee 'nil
