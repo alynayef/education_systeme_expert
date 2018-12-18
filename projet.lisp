@@ -18,7 +18,7 @@
     ;--------------------------
     ;Methode utilisées
     ;--------------------------
-    (defun moyenneGeneral (note1 note2 note3) (/ (+  note1 note2 note3) 3))
+    (defun moyenneGenerale (note1 note2 note3) (/ (+  note1 note2 note3) 3))
 
     ;--------------------------
     ;saisie des notes pour chaque matiere et instantiation des matieres
@@ -61,15 +61,18 @@
     (write "saisir le nom complet de l'eleve: ")
      ( setq eleve1 (make-eleve :nom (read)
      :resultats (list Litteraire FEconomie Scientifique )))
-(write "--------------------PROJET--------------------")
+;--------------------------
+;Programme
+;--------------------------
+(write-line "--------------------PROJET--------------------")
 (print ( filiere-moyennefiliere Litteraire))
 (print eleve1)
-(write "-----------------MODIFICATION-----------------")
-(setf  ( filiere-moyennefiliere Litteraire) (moyenneGeneral ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
-(setf  ( filiere-moyennefiliere FEconomie) (moyenneGeneral ( matiere-moyenne Economie) ( matiere-moyenne Histoire) ( matiere-moyenne Mathematiques) ) )
-(setf  ( filiere-moyennefiliere Scientifique) (moyenneGeneral ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT) ) )
+(write-line "-----------------MODIFICATION-----------------")
+(setf  ( filiere-moyennefiliere Litteraire) (moyenneGenerale ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
+(setf  ( filiere-moyennefiliere FEconomie) (moyenneGenerale ( matiere-moyenne Economie) ( matiere-moyenne Histoire) ( matiere-moyenne Mathematiques) ) )
+(setf  ( filiere-moyennefiliere Scientifique) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT) ) )
 (print eleve1)
-(write "--------------------PROJET--------------------")
+(write-line "--------------------PROJET--------------------")
 
 
  
