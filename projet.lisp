@@ -25,13 +25,13 @@
 ;--------------------------
 (write "saisir la moyenne en Français: ")
 (setq Francais (make-matiere :nom 'Francais
-                                 :moyenne 12.0  ) )
+                                 :moyenne 7.0  ) )
 (write "saisir la moyenne en Philosophie: ")
 (setq Philosophie (make-matiere :nom 'Philosophie
-                                :moyenne 15.0   ) )
+                                :moyenne 11.0   ) )
 (write "saisir la moyenne en Anglais: ")
 (setq Anglais (make-matiere :nom 'Anglais
-                            :moyenne 10.0  ) )
+                            :moyenne 9.0  ) )
 (write "saisir la moyenne en Economie: ")
 (setq Economie (make-matiere :nom 'Economie
                                 :moyenne 8.0   ) )
@@ -43,12 +43,12 @@
                                 :moyenne 9.0   ) )
 (write "saisir la moyenne en Physique: ")
 (setq Physique (make-matiere :nom 'Physique
-                                :moyenne 18.0   ) )
+                                :moyenne 5.0   ) )
 (write "saisir la moyenne en SVT: ")
 (setq SVT (make-matiere :nom 'SVT
-                                :moyenne 14.0   ) )
+                                :moyenne 3.0   ) )
 ;--------------------------
-;intanttiation des filiéres
+;intanttiation des fileres
 ;--------------------------
 (setq Litteraire (make-filiere :nomfiliere 'Litteraire :matiere (list Francais Philosophie Anglais) :moyennefiliere -1.0))
 
@@ -56,7 +56,7 @@
 
 (setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1.0)) 
 ;--------------------------
-;instantion d'un éléve
+;instantion d'un eleve
 ;--------------------------
 (write "saisir le nom complet de l'eleve: ")
     ( setq eleve1 (make-eleve :nom (read)
@@ -111,8 +111,8 @@
 (defun moteur ()
        (cond ((not (and (regle-utilisee regle1) (or (regle-utilisee regle2) (regle-utilisee regle3))))
               (cond ((not (regle-utilisee regle1)) (and (cond ((eval (regle-condition regle1)) (eval (regle-action regle1)))) (moteur)))
-                    (t (cond ((eval (regle-condition regle2)) (and (regle-action regle2) (moteur)))
-                             (t (and (regle-action regle3) (moteur)))))))
+                    (t (cond ((eval (regle-condition regle2)) (and (eval (regle-action regle2))) (moteur))
+                             (t (and (eval (regle-action regle3)) (moteur)))))))
              (t (format t "Syst�me expert termine~%"))))
 
 ;--------------------------
