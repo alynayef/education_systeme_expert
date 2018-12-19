@@ -1,4 +1,5 @@
 ; Structure du programme
+;-------------------------------
 (defstruct matiere
     nom
     moyenne
@@ -15,14 +16,17 @@
     resultats
 )
 
-;--------------------------
-;Methode utilisees
-;--------------------------
-(defun moyenneGenerale (note1 note2 note3) (/ (+  note1 note2 note3) 3))
+(defstruct regle
+    nom
+    utilisee
+    condition
+    action
+)
 
 ;--------------------------
-;saisie des notes pour chaque matiere et instantiation des matieres
+; Saisie des notes pour chaque matiere et instantiation des matieres
 ;--------------------------
+
 (write "saisir la moyenne en FranÃ§ais: ")
 (setq Francais (make-matiere :nom 'Francais
                                  :moyenne 7.0  ) )
@@ -48,29 +52,26 @@
 (setq SVT (make-matiere :nom 'SVT
                                 :moyenne 3.0   ) )
 ;--------------------------
-;intanttiation des fileres
+; Intanttiation des fileres
 ;--------------------------
+
 (setq Litteraire (make-filiere :nomfiliere 'Litteraire :matiere (list Francais Philosophie Anglais) :moyennefiliere -1.0))
 
 (setq FEconomie (make-filiere :nomfiliere 'Economie :matiere (list Economie Histoire Mathematiques) :moyennefiliere -1.0))
 
-(setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1.0)) 
+(setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1.0))
+ 
 ;--------------------------
-;instantion d'un eleve
+; Instantion d'un eleve
 ;--------------------------
+
 (write "saisir le nom complet de l'eleve: ")
     ( setq eleve1 (make-eleve :nom (read)
     :resultats (list Litteraire FEconomie Scientifique )))
-;--------------------------
-;REGLES
-;---------------------------------
 
-(defstruct regle
-    nom
-    utilisee
-    condition
-    action
-)
+;--------------------------------
+; Instanciation des regles
+;---------------------------------
 
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
@@ -92,8 +93,12 @@
 
 (setq listeregle (list regle1 regle2 regle3))
 
-;METHODES UTILISEES
+;--------------------------------
+; METHODES UTILISEES
 ;---------------------------------
+
+(defun moyenneGenerale (note1 note2 note3) 
+       (/ (+  note1 note2 note3) 3))
 
 (defun verifie-moyenne-filiere (filiere-evaluee) 
        (cond ((> (filiere-moyennefiliere filiere-evaluee) 9.99) (format t "Filiere ~A conseillee a ~d~%" (filiere-nomfiliere filiere-evaluee) (/ (filiere-moyennefiliere filiere-evaluee) (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere FEconomie)  (filiere-moyennefiliere Scientifique)))))))
@@ -105,9 +110,16 @@
 (defun calcul-ponderation-total (noteL noteES noteS)
        (+ (calcul-ponderation-note noteL) (calcul-ponderation-note noteES) (calcul-ponderation-note noteS)))
 
+(defun affiche-etat-regles ()
+       (format t "Etat des regles (nil = pas utilisee, T = utilisee) :~%")
+       (format t "Etat regle 1 : ~A~%" (regle-utilisee regle1))
+       (format t "Etat regle 2 : ~A~%" (regle-utilisee regle2))
+       (format t "Etat regle 3 : ~A~%" (regle-utilisee regle3))
+)
 ;--------------------------
 ;Moteur d'inférence
 ;--------------------------
+
 (defun moteur ()
        (cond ((not (and (regle-utilisee regle1) (or (regle-utilisee regle2) (regle-utilisee regle3))))
               (cond ((not (regle-utilisee regle1)) (and (cond ((eval (regle-condition regle1)) (eval (regle-action regle1)))) (moteur)))
@@ -116,8 +128,9 @@
              (t (format t "Système expert termine~%"))))
 
 ;--------------------------
-;Programme
+; Programme
 ;--------------------------
+
 (write-line "--------------------PROJET--------------------")
 (print ( filiere-moyennefiliere Litteraire))
 (print eleve1)
