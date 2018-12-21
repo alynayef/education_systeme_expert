@@ -27,30 +27,30 @@
 ; Saisie des notes pour chaque matiere et instantiation des matieres
 ;--------------------------
 
-(write "saisir la moyenne en Français: ")
+(format t "saisir la moyenne en Français: ~%")
 (setq Francais (make-matiere :nom 'Francais
-                                 :moyenne 7.0  ) )
-(write "saisir la moyenne en Philosophie: ")
+                                 :moyenne (read)  ) )
+(format t "saisir la moyenne en Philosophie: ~%")
 (setq Philosophie (make-matiere :nom 'Philosophie
-                                :moyenne 11.0   ) )
-(write "saisir la moyenne en Anglais: ")
+                                :moyenne (read)   ) )
+(format t "saisir la moyenne en Anglais: ~%")
 (setq Anglais (make-matiere :nom 'Anglais
-                            :moyenne 9.0  ) )
-(write "saisir la moyenne en Economie: ")
+                            :moyenne (read)  ) )
+(format t "saisir la moyenne en Economie: ~%")
 (setq Economie (make-matiere :nom 'Economie
-                                :moyenne 8.0   ) )
-(write "saisir la moyenne en Histoire: ")
+                                :moyenne (read)   ) )
+(format t "saisir la moyenne en Histoire: ~%")
 (setq Histoire (make-matiere :nom 'Histoire
-                                :moyenne 7.0   ) )
-(write "saisir la moyenne en Mathematiques: ")
+                                :moyenne (read)  ) )
+(format t "saisir la moyenne en Mathematiques: ~%")
 (setq Mathematiques (make-matiere :nom 'Mathematiques
-                                :moyenne 9.0   ) )
-(write "saisir la moyenne en Physique: ")
+                                :moyenne (read)   ) )
+(format t "saisir la moyenne en Physique: ~%")
 (setq Physique (make-matiere :nom 'Physique
-                                :moyenne 5.0   ) )
-(write "saisir la moyenne en SVT: ")
+                                :moyenne (read)   ) )
+(format t "saisir la moyenne en SVT: ~%")
 (setq SVT (make-matiere :nom 'SVT
-                                :moyenne 3.0   ) )
+                                :moyenne (read)   ) )
 ;--------------------------
 ; Intanttiation des fileres
 ;--------------------------
@@ -62,17 +62,17 @@
 (setq Scientifique (make-filiere :nomfiliere 'Scientifique :matiere (list Mathematiques Physique SVT) :moyennefiliere -1.0))
  
 ;--------------------------
-; Instantion d'un eleve
+; Instanciation d'un eleve
 ;--------------------------
 
-(write "saisir le nom complet de l'eleve: ")
+(format t "saisir le nom complet de l'eleve: ~%")
     ( setq eleve1 (make-eleve :nom (read)
     :resultats (list Litteraire FEconomie Scientifique )))
 
 ;--------------------------------
 ; Instanciation des regles
 ;---------------------------------
-
+(format t "instanciation des régles ~%")
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
                          :condition '(or (equal ( filiere-moyennefiliere Litteraire) -1.0) (equal ( filiere-moyennefiliere FEconomie) -1.0) (equal (filiere-moyennefiliere Scientifique) -1.0))
@@ -119,7 +119,7 @@
 ;--------------------------
 ;Moteur d'inf�rence
 ;--------------------------
-
+(format t "instanciation du moteur d'inférence ~%")
 (defun moteur ()
        (cond ((not (and ( regle-utilisee regle1) (or ( regle-utilisee regle2) ( regle-utilisee regle3))))
               (cond ((not ( regle-utilisee regle1)) (and (cond ((eval ( regle-condition regle1)) (eval ( regle-action regle1)))) (moteur)))
@@ -131,20 +131,20 @@
 ; Programme
 ;--------------------------
 
-(write-line "--------------------PROJET--------------------")
+(format t  "--------------------PROJET-------------------- ~%")
 (print ( filiere-moyennefiliere Litteraire))
 (print eleve1)
-(write-line "--------------------REGLES--------------------")
+(format t  "--------------------REGLES-------------------- ~%")
 (setq ponderationote (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere FEconomie) ( filiere-moyennefiliere Scientifique) ))
 (print ponderationote)
 (print (eval ( regle-condition regle1)) (eval ( regle-action regle1)))
-(write-line "-----------------MODIFICATION-----------------")
+(format t "-----------------MODIFICATION----------------- ~%")
 (print eleve1)
 (setf  ( filiere-moyennefiliere Litteraire) (moyenneGenerale ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
 (setf  ( filiere-moyennefiliere FEconomie) (moyenneGenerale ( matiere-moyenne Economie) ( matiere-moyenne Histoire) ( matiere-moyenne Mathematiques) ) )
 (setf  ( filiere-moyennefiliere Scientifique) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT) ) )
 (print eleve1)
-(write-line "--------------------PROJET--------------------")
+(format t  "--------------------PROJET-------------------- ~%")
 
 
  
