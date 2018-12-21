@@ -27,7 +27,7 @@
 ; Saisie des notes pour chaque matiere et instantiation des matieres
 ;--------------------------
 
-(format t "saisir la moyenne en Français: ~%")
+(format t "saisir la moyenne en Francais: ~%")
 (setq Francais (make-matiere :nom 'Francais
                                  :moyenne (read)  ) )
 (format t "saisir la moyenne en Philosophie: ~%")
@@ -72,7 +72,7 @@
 ;--------------------------------
 ; Instanciation des regles
 ;---------------------------------
-(format t "instanciation des régles ~%")
+(format t "instanciation des regles ~%")
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
                          :condition '(or (equal ( filiere-moyennefiliere Litteraire) -1.0) (equal ( filiere-moyennefiliere FEconomie) -1.0) (equal (filiere-moyennefiliere Scientifique) -1.0))
@@ -116,34 +116,47 @@
        (format t "Etat regle 2 : ~A~%" ( regle-utilisee regle2))
        (format t "Etat regle 3 : ~A~%" ( regle-utilisee regle3))
 )
+
+(defun print-m (m)
+    (format t " ~A : ~d ~%" (matiere-nom m) (matiere-moyenne m)))
+
+(defun print-f (f)
+    (format t "~%")
+    (format t " >>> ~A <<<~%" (filiere-nomfiliere f))
+    (loop for m in (filiere-matiere f) do (print-m m))
+    (format t " -> moyennefiliere : ~,2f~%"  (filiere-moyennefiliere f)))
+
+(defun print-list-f (l)
+    (loop for x in l do (print-f x)))
+
+(defun print-eleve (e)
+    (format t "~%------------------------------------~%")
+    (format t " Nom de l'eleve : ~A.~%" (eleve-nom e))
+    (print-list-f (eleve-resultats e))
+    (format t "------------------------------------~%"))
 ;--------------------------
 ;Moteur d'inf�rence
 ;--------------------------
-(format t "instanciation du moteur d'inférence ~%")
+(format t "instanciation du moteur d'inference ~%")
 (defun moteur ()
        (cond ((not (and ( regle-utilisee regle1) (or ( regle-utilisee regle2) ( regle-utilisee regle3))))
               (cond ((not ( regle-utilisee regle1)) (and (cond ((eval ( regle-condition regle1)) (eval ( regle-action regle1)))) (moteur)))
                     (t (cond ((eval ( regle-condition regle2)) (and (eval ( regle-action regle2))) (moteur))
                              (t (and (eval ( regle-action regle3)) (moteur)))))))
-             (t (format t "Syst�me expert termine~%"))))
+             (t (format t "Systeme expert termine~%"))))
 
 ;--------------------------
 ; Programme
 ;--------------------------
 
 (format t  "--------------------PROJET-------------------- ~%")
-(print ( filiere-moyennefiliere Litteraire))
-(print eleve1)
+(print-eleve eleve1)
 (format t  "--------------------REGLES-------------------- ~%")
-(setq ponderationote (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere FEconomie) ( filiere-moyennefiliere Scientifique) ))
-(print ponderationote)
-(print (eval ( regle-condition regle1)) (eval ( regle-action regle1)))
+(affiche-etat-regles )
 (format t "-----------------MODIFICATION----------------- ~%")
-(print eleve1)
-(setf  ( filiere-moyennefiliere Litteraire) (moyenneGenerale ( matiere-moyenne Francais) ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ) )
-(setf  ( filiere-moyennefiliere FEconomie) (moyenneGenerale ( matiere-moyenne Economie) ( matiere-moyenne Histoire) ( matiere-moyenne Mathematiques) ) )
-(setf  ( filiere-moyennefiliere Scientifique) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT) ) )
-(print eleve1)
+(moteur )
+(print-eleve eleve1)
+(affiche-etat-regles )
 (format t  "--------------------PROJET-------------------- ~%")
 
 
