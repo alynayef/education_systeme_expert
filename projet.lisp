@@ -75,40 +75,21 @@
 
 (setq regle1 (make-regle :nom 'regle1
                          :utilisee 'nil
-<<<<<<< HEAD
-                         :condition '(or (equal ( filiere-moyennefiliere Litteraire) -1) (equal ( filiere-moyennefiliere FEconomie) -1.0) (equal ( filiere-moyennefiliere Scientifique) -1.0))
-                         :action '((setf ( filiere-moyennefiliere Litteraire) (moyenneGenerale ( matiere-moyenne Philosophie) ( matiere-moyenne Anglais) ( matiere-moyenne Francais)))
-                                   (setf ( filiere-moyennefiliere Scientifique) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Physique) ( matiere-moyenne SVT)))
-                                   (setf ( filiere-moyennefiliere FEconomie) (moyenneGenerale ( matiere-moyenne Mathematiques) ( matiere-moyenne Economie) ( matiere-moyenne Histoire))))))
+                         :condition '(or (equal ( filiere-moyennefiliere Litteraire) -1.0) (equal ( filiere-moyennefiliere FEconomie) -1.0) (equal (filiere-moyennefiliere Scientifique) -1.0))
+                         :action '(setf ( filiere-moyennefiliere Litteraire) ( moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
+                                        ( filiere-moyennefiliere Scientifique) ( moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
+                                        ( filiere-moyennefiliere FEconomie) (moyenneGenerale ( matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire))
+                                        ( regle-utilisee regle1) t)))
 
 (setq regle2 (make-regle :nom 'regle2
                          :utilisee 'nil
-                         :condition '(and (< ( filiere-moyennefiliere Litteraire) 10) (< ( filiere-moyennefiliere FEconomie) 10) (< ( filiere-moyennefiliere Scientifique) 10)
-                         :action '(printf "Un redoublement serait bien!"))))
+                         :condition '(and (< ( filiere-moyennefiliere Litteraire) 10) (< ( filiere-moyennefiliere FEconomie) 10) (< (filiere-moyennefiliere Scientifique) 10))
+                         :action '(and (setf ( regle-utilisee regle2) t) (format t "Un redoublement serait bien!~%"))))
 
 (setq regle3 (make-regle :nom 'regle3
                          :utilisee 'nil
-                         :condition '(or (> ( filiere-moyennefiliere Litteraire) 9.99) (> ( filiere-moyennefiliere FEconomie) 9.99) (> ( filiere-moyennefiliere Scientifique) 9.99))
-                         :action '(cond ((> noteL 9.99) (format t "Filiere litteraire conseillee ~d" (/ noteL (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere FEconomie) ( filiere-moyennefiliere Scientifique)))))
-                                        ((> noteES 9.99) (format t "Filiere economie et Social conseillee ~d" (/ noteES (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere FEconomie)  ( filiere-moyennefiliere Scientifique)))))
-                                        ((> noteS 9.99) (format t "Filiere scientifique conseillee ~d" (/ noteS (calcul-ponderation-total ( filiere-moyennefiliere Litteraire) ( filiere-moyennefiliere FEconomie) ( filiere-moyennefiliere Scientifique))))))))
-=======
-                         :condition '(or (equal (filiere-moyennefiliere Litteraire) -1.0) (equal (filiere-moyennefiliere FEconomie) -1.0) (equal (filiere-moyennefiliere Scientifique) -1.0))
-                         :action '(setf (filiere-moyennefiliere Litteraire) (moyenneGenerale (matiere-moyenne Philosophie) (matiere-moyenne Anglais) (matiere-moyenne Francais))
-                                        (filiere-moyennefiliere Scientifique) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Physique) (matiere-moyenne SVT))
-                                        (filiere-moyennefiliere FEconomie) (moyenneGenerale (matiere-moyenne Mathematiques) (matiere-moyenne Economie) (matiere-moyenne Histoire))
-                                        (regle-utilisee regle1) t)))
-
-(setq regle2 (make-regle :nom 'regle2
-                         :utilisee 'nil
-                         :condition '(and (< (filiere-moyennefiliere Litteraire) 10) (< (filiere-moyennefiliere FEconomie) 10) (< (filiere-moyennefiliere Scientifique) 10))
-                         :action '(and (setf (regle-utilisee regle2) t) (format t "Un redoublement serait bien!~%"))))
-
-(setq regle3 (make-regle :nom 'regle3
-                         :utilisee 'nil
-                         :condition '(or (> (filiere-moyennefiliere Litteraire) 9.99) (> (filiere-moyennefiliere FEconomie) 9.99) (> (filiere-moyennefiliere Scientifique) 9.99))
-                         :action '(and (setf (regle-utilisee regle3) t) (mapcar 'verifie-moyenne-filiere (list Litteraire FEconomie Scientifique)))))
->>>>>>> 2e1b7e32fc49b1398cb736ac66552925353feb7f
+                         :condition '(or (> ( filiere-moyennefiliere Litteraire) 9.99) (> ( filiere-moyennefiliere FEconomie) 9.99) (> (filiere-moyennefiliere Scientifique) 9.99))
+                         :action '(and (setf ( regle-utilisee regle3) t) (mapcar 'verifie-moyenne-filiere (list Litteraire FEconomie Scientifique)))))
 
 (setq listeregle (list regle1 regle2 regle3))
 
@@ -120,7 +101,7 @@
        (/ (+  note1 note2 note3) 3))
 
 (defun verifie-moyenne-filiere (filiere-evaluee) 
-       (cond ((> (filiere-moyennefiliere filiere-evaluee) 9.99) (format t "Filiere ~A conseillee a ~d~%" (filiere-nomfiliere filiere-evaluee) (/ (filiere-moyennefiliere filiere-evaluee) (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere FEconomie)  (filiere-moyennefiliere Scientifique)))))))
+       (cond ((> ( filiere-moyennefiliere filiere-evaluee) 9.99) (format t "Filiere ~A conseillee a ~d~%" (filiere-nomfiliere filiere-evaluee) (/ (filiere-moyennefiliere filiere-evaluee) (calcul-ponderation-total (filiere-moyennefiliere Litteraire) (filiere-moyennefiliere FEconomie)  (filiere-moyennefiliere Scientifique)))))))
 
 (defun calcul-ponderation-note (moyenne-filiere)
        (cond ((> moyenne-filiere 9.99) moyenne-filiere)
@@ -131,20 +112,20 @@
 
 (defun affiche-etat-regles ()
        (format t "Etat des regles (nil = pas utilisee, T = utilisee) :~%")
-       (format t "Etat regle 1 : ~A~%" (regle-utilisee regle1))
-       (format t "Etat regle 2 : ~A~%" (regle-utilisee regle2))
-       (format t "Etat regle 3 : ~A~%" (regle-utilisee regle3))
+       (format t "Etat regle 1 : ~A~%" ( regle-utilisee regle1))
+       (format t "Etat regle 2 : ~A~%" ( regle-utilisee regle2))
+       (format t "Etat regle 3 : ~A~%" ( regle-utilisee regle3))
 )
 ;--------------------------
-;Moteur d'inférence
+;Moteur d'infï¿½rence
 ;--------------------------
 
 (defun moteur ()
-       (cond ((not (and (regle-utilisee regle1) (or (regle-utilisee regle2) (regle-utilisee regle3))))
-              (cond ((not (regle-utilisee regle1)) (and (cond ((eval (regle-condition regle1)) (eval (regle-action regle1)))) (moteur)))
-                    (t (cond ((eval (regle-condition regle2)) (and (eval (regle-action regle2))) (moteur))
-                             (t (and (eval (regle-action regle3)) (moteur)))))))
-             (t (format t "Système expert termine~%"))))
+       (cond ((not (and ( regle-utilisee regle1) (or ( regle-utilisee regle2) ( regle-utilisee regle3))))
+              (cond ((not ( regle-utilisee regle1)) (and (cond ((eval ( regle-condition regle1)) (eval ( regle-action regle1)))) (moteur)))
+                    (t (cond ((eval ( regle-condition regle2)) (and (eval ( regle-action regle2))) (moteur))
+                             (t (and (eval ( regle-action regle3)) (moteur)))))))
+             (t (format t "Systï¿½me expert termine~%"))))
 
 ;--------------------------
 ; Programme
